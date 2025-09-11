@@ -1,6 +1,8 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+)
 import "encoding/json"
 
 type User struct {

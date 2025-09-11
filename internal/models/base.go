@@ -1,17 +1,13 @@
 package models
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type AccountStatus string
 type BaseModel struct {
-	ID        uint           `json:"id" gorm:"primaryKey"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
-	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
+	// gorm.Model은 다음 필드들을 포함하는 기본 GoLang 구조체입니다: ID, CreatedAt, UpdatedAt, DeletedAt
+	gorm.Model
 }
 
 const (
