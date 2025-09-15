@@ -1,6 +1,10 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin-boiler/internal/service"
+
+	"github.com/gin-gonic/gin"
+)
 
 // 사용자 관련 라우트 설정
 func SetupUserRoutes(router *gin.Engine) {
@@ -11,13 +15,13 @@ func SetupUserRoutes(router *gin.Engine) {
 		// 사용자 관련 라우트
 		users := api.Group("/users")
 		{
-			users.GET("/ping", ping)
-			//users.POST("", createUser)       // POST /api/v1/users
-			//users.GET("/:id", getUser)       // GET /api/v1/users/:id
-			//users.GET("", listUsers)         // GET /api/v1/users
-			//users.PUT("/:id", updateUser)    // PUT /api/v1/users/:id
-			//users.DELETE("/:id", softDeleteUser) // DELETE /api/v1/users/:id
-			//user.DELETE("", hardDeleteUsers)  // DELETE /api/v1/users
+			users.GET("/ping", service.UserPingService)
+			users.GET("/list", service.ListUserService)
+			users.POST("", service.CreateUserService)           // POST /api/v1/users
+			users.GET("/:id", service.GetUserService)           // GET /api/v1/users/:id
+			users.PUT("/:id", service.UpdateUserService)        // PUT /api/v1/users/:id
+			users.DELETE("/:id", service.DeleteUserService)     // DELETE /api/v1/users/:id
+			users.DELETE("/:id", service.DeleteHardUserService) // DELETE /api/v1/users
 		}
 		//posts := api.Group("/posts")
 		//{
