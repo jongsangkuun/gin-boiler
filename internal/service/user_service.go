@@ -22,8 +22,15 @@ func CreateUserService(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+	hashPassword, err := utils.HashPassword(createDto.Password)
+	if err != nil {
+		response := utils.CreateBaseResponse(500, "error", err.Error())
+		c.JSON(500, response)
+	}
 
-	err := repository.CreateUser(createDto)
+	createDto.Password = hashPassword
+
+	err = repository.CreateUser(createDto)
 	if err != nil {
 		response := utils.CreateBaseResponse(500, "error", err.Error())
 		c.JSON(500, response)
