@@ -61,7 +61,6 @@ func buildPostgresDSN(env *config.Env) string {
 		env.DbConfig.Password,
 		env.DbConfig.DbName,
 		env.DbConfig.Port,
-		//env.DbConfig.SslMode,
 	)
 }
 
