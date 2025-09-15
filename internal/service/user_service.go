@@ -2,6 +2,7 @@ package service
 
 import (
 	"gin-boiler/internal/dto"
+	"gin-boiler/internal/models"
 	"gin-boiler/internal/repository"
 	"gin-boiler/internal/utils"
 	"net/http"
@@ -22,15 +23,22 @@ func CreateUserService(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+	// Request로 전달받은 데이터 중 비밀번호를 암호화는 로직이 Service or Repo(DB 통신 로직) 어디에 있어야 할까?
 	hashPassword, err := utils.HashPassword(createDto.Password)
 	if err != nil {
 		response := utils.CreateBaseResponse(500, "error", err.Error())
 		c.JSON(500, response)
 	}
 
-	createDto.Password = hashPassword
+	// Dto -> Model
+	userModel := models.User{
+		Email:    createDto.Email,
+		Password: hashPassword,
+		UserId:   createDto.UserId,
+		Username: createDto.Username,
+	}
 
-	err = repository.CreateUser(createDto)
+	err = repository.CreateUser(userModel)
 	if err != nil {
 		response := utils.CreateBaseResponse(500, "error", err.Error())
 		c.JSON(500, response)

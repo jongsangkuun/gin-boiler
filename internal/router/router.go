@@ -12,9 +12,3 @@ func SetupRoutes(router *gin.Engine) {
 		SetupUserRoutes(api)
 	}
 }
-
-func ping(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
-}

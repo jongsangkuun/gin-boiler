@@ -9,7 +9,6 @@ import (
 func SetupUserRoutes(api *gin.RouterGroup) *gin.RouterGroup {
 	userRoutes := api.Group("/user")
 	{
-		userRoutes.GET("/ping", service.UserPingService)              // GET /api/v1/user_routes/ping
 		userRoutes.GET("/list", service.ListUserService)              // GET /api/v1/user_routes
 		userRoutes.GET("/:id", service.GetUserService)                // GET /api/v1/user_routes/:id
 		userRoutes.POST("", service.CreateUserService)                // POST /api/v1/user_routes
