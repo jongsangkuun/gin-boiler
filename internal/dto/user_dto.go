@@ -5,9 +5,10 @@ type GetUserDto struct {
 }
 
 type CreateUserDto struct {
-	Email    string
-	Username string
-	Password string
+	Email    string `json:"email"`
+	UserId   string `json:"user_id"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type UpdateUserDto struct {
