@@ -3,6 +3,7 @@ package repository
 import (
 	"gin-boiler/internal/database"
 	"gin-boiler/internal/models"
+	"time"
 )
 
 func GetUser(id string) (*models.User, error) {
@@ -24,6 +25,22 @@ func CreateUser(userModel models.User) error {
 
 func UpdateUser(userModel models.User) error {
 	err := database.DB.Save(&userModel).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteUser(id string) error {
+	err := database.DB.Model(&models.User{}).Where("id = ?", id).Update("deleted_at", time.Now()).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteUserHard(id string) error {
+	err := database.DB.Where("id = ?", id).Delete(&models.User{}).Error
 	if err != nil {
 		return err
 	}
