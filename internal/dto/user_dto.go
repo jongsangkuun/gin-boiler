@@ -12,8 +12,6 @@ type CreateUserDto struct {
 }
 
 type UpdateUserDto struct {
-	ID       int
-	Email    string
-	Username string
-	Password string
+	ID int
+	CreateUserDto
 }

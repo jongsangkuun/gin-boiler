@@ -21,3 +21,11 @@ func CreateUser(userModel models.User) error {
 	}
 	return nil
 }
+
+func UpdateUser(userModel models.User) error {
+	err := database.DB.Save(&userModel).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

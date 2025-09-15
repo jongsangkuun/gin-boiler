@@ -57,7 +57,42 @@ func GetUserService(c *gin.Context) {
 	response := utils.CreateBaseResponse(200, "success", data)
 	c.JSON(200, response)
 }
-func UpdateUserService(c *gin.Context)     {}
+
+func UpdateUserService(c *gin.Context) {
+	var updateDto dto.UpdateUserDto
+	var hashPassword string
+
+	if err := c.ShouldBindJSON(&updateDto); err != nil {
+		response := utils.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	// Dto -> Model
+	userModel := models.User{
+		Email:    updateDto.Email,
+		Password: hashPassword,
+		UserId:   updateDto.UserId,
+		Username: updateDto.Username,
+	}
+
+	if updateDto.Password != "" {
+		hashPassword, err := utils.HashPassword(updateDto.Password)
+		if err != nil {
+			response := utils.CreateBaseResponse(500, "error", err.Error())
+			c.JSON(500, response)
+		}
+		userModel.Password = hashPassword
+	}
+
+	err := repository.UpdateUser(userModel)
+	if err != nil {
+		response := utils.CreateBaseResponse(500, "error", err.Error())
+		c.JSON(500, response)
+	}
+
+	response := utils.CreateBaseResponse(200, "success", "")
+	c.JSON(200, response)
+}
 func DeleteUserService(c *gin.Context)     {}
 func ListUserService(c *gin.Context)       {}
 func DeleteHardUserService(c *gin.Context) {}
