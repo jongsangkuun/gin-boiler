@@ -10,6 +10,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// LoginService godoc
+// @Summary      사용자 로그인
+// @Description  사용자 ID와 비밀번호로 로그인합니다
+// @Tags         인증
+// @Accept       json
+// @Produce      json
+// @Param        request body dto.LoginReqDto true "로그인 정보"
+// @Success      200  {object}  utils.BaseResponse{data=dto.LoginResDto} "로그인 성공"
+// @Failure      400  {object}  utils.BaseResponse "잘못된 요청"
+// @Failure      401  {object}  utils.BaseResponse "인증 실패"
+// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Router       /auth/login [post]
 func LoginService(c *gin.Context) {
 	var loginDto dto.LoginReqDto
 

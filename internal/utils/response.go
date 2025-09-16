@@ -6,11 +6,11 @@ type BaseResponse struct {
 	Data    interface{} `json:"data"`
 }
 
-type BaseListResponse[T any] struct {
-	Status  uint   `json:"status"`
-	Message string `json:"message"`
-	Data    []T    `json:"data"`
-	Count   int64  `json:"count"`
+type BaseListResponse struct {
+	Status  uint        `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+	Count   int64       `json:"count"`
 }
 
 func CreateBaseResponse(status uint, message string, data interface{}) BaseResponse {
@@ -21,8 +21,8 @@ func CreateBaseResponse(status uint, message string, data interface{}) BaseRespo
 	}
 }
 
-func CreateBaseListResponse[T any](status uint, message string, data []T, count int64) BaseListResponse[T] {
-	return BaseListResponse[T]{
+func CreateBaseListResponse(status uint, message string, data interface{}, count int64) BaseListResponse {
+	return BaseListResponse{
 		Status:  status,
 		Message: message,
 		Data:    data,

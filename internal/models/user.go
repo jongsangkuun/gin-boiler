@@ -5,6 +5,7 @@ import (
 )
 import "encoding/json"
 
+// User 사용자 모델
 type User struct {
 	BaseModel
 	UserId        string        `json:"user_id" gorm:"uniqueIndex;not null;size:255"`
