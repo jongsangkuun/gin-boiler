@@ -11,7 +11,7 @@ import (
 )
 
 func CreateUserService(c *gin.Context) {
-	var createDto dto.CreateUserDto
+	var createDto dto.CreateUserReqDto
 	if err := c.ShouldBindJSON(&createDto); err != nil {
 		response := utils.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
 		c.JSON(http.StatusBadRequest, response)
@@ -53,7 +53,7 @@ func GetUserService(c *gin.Context) {
 }
 
 func UpdateUserService(c *gin.Context) {
-	var updateDto dto.UpdateUserDto
+	var updateDto dto.UpdateUserReqDto
 	var hashPassword string
 
 	if err := c.ShouldBindJSON(&updateDto); err != nil {
@@ -98,7 +98,15 @@ func DeleteUserService(c *gin.Context) {
 	c.JSON(200, response)
 }
 
-func ListUserService(c *gin.Context) {}
+func ListUserService(c *gin.Context) {
+	userList, count, err := repository.GetUserList()
+	if err != nil {
+		c.JSON(500, utils.CreateBaseResponse(500, "error", err.Error()))
+	}
+	response := utils.CreateBaseListResponse(200, "success", userList, count)
+	c.JSON(200, response)
+
+}
 
 func DeleteHardUserService(c *gin.Context) {
 	id := c.Param("id")

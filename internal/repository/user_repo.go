@@ -46,3 +46,15 @@ func DeleteUserHard(id string) error {
 	}
 	return nil
 }
+
+func GetUserList() ([]models.User, int64, error) {
+	var users []models.User
+	var count int64
+
+	err := database.DB.Find(&users).Count(&count).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return users, count, nil
+}
