@@ -1,33 +1,15 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 // 사용자 관련 라우트 설정
-func SetupUserRoutes(router *gin.Engine) {
+func SetupRoutes(router *gin.Engine) {
 	// API 그룹 생성
 	api := router.Group("/api/v1")
 	{
-		// Todo
-		// 사용자 관련 라우트
-		users := api.Group("/users")
-		{
-			users.GET("/ping", ping)
-			//users.POST("", createUser)       // POST /api/v1/users
-			//users.GET("/:id", getUser)       // GET /api/v1/users/:id
-			//users.GET("", listUsers)         // GET /api/v1/users
-			//users.PUT("/:id", updateUser)    // PUT /api/v1/users/:id
-			//users.DELETE("/:id", softDeleteUser) // DELETE /api/v1/users/:id
-			//user.DELETE("", hardDeleteUsers)  // DELETE /api/v1/users
-		}
-		//posts := api.Group("/posts")
-		//{
-		//	posts.GET("/ping", ping)
-		//}
+		SetupUserRoutes(api)
+		SetupAuthRoutes(api)
 	}
-}
-
-func ping(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
 }

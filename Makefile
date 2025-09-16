@@ -47,42 +47,9 @@ gorm-inspect:
 docker-up:
 	docker compose up -d
 
+docker-build:
+	docker compose build
+
 # Docker 컨테이너 중지 (docker compose 사용)
 docker-down:
 	docker compose down
-
-# 클린업
-clean:
-	rm -rf bin/
-	go clean
-
-# migrations 폴더 생성
-init-migrations:
-	mkdir -p migrations atlas
-
-# PostgreSQL 상태 확인
-db-status:
-	docker exec boiler-postgres-db pg_isready -h localhost -p 5432 -U boilerplate_user
-
-# PostgreSQL 로그 확인
-db-logs:
-	docker logs boiler-postgres-db
-
-# 전체 워크플로우 (Docker 시작 + 마이그레이션)
-setup: docker-up
-	@echo "Docker 컨테이너 시작 중..."
-	@sleep 10
-	@echo "스키마 검사 중..."
-	make atlas-inspect
-	@echo "마이그레이션 생성 중..."
-	make migrate-create || echo "마이그레이션이 필요하지 않습니다."
-	@echo "마이그레이션 적용 중..."
-	make migrate-up || echo "적용할 마이그레이션이 없습니다."
-
-# Docker 시스템 체크
-docker-check:
-	@echo "Docker 버전 확인:"
-	@docker --version
-	@echo ""
-	@echo "Docker Compose 버전 확인:"
-	@docker compose version || docker-compose --version || echo "Docker Compose를 찾을 수 없습니다."

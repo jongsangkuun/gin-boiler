@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  boiler-api:
+    container_name: boiler-api
+    ports:
+      - "8080:8080"
+    networks:
+      - gin-boiler
+    volumes:
+      - ./:/app
+    depends_on:
+      - boiler-postgres-db
+
   boiler-postgres-db:
     container_name: boiler-postgres-db
     image: postgres:latest

@@ -1,6 +1,25 @@
 version: '3.8'
 
 services:
+  boiler-api:
+    build:
+      context: .
+      target: prod
+      dockerfile: Dockerfile
+    environment:
+      PORT: ${PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      POSTGRES_USER: ${PROD_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PROD_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PROD_POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_SSLMODE: ${PROD_POSTGRES_SSLMODE}
+      POSTGRES_MAX_IDLE_CONNS: ${PROD_POSTGRES_MAX_IDLE_CONNS}
+      POSTGRES_MAX_OPEN_CONNS: ${PROD_POSTGRES_MAX_OPEN_CONNS}
+      POSTGRES_CONN_MAX_LIFETIME: ${PROD_POSTGRES_CONN_MAX_LIFETIME}
+      POSTGRES_CONN_MAX_IDLE_TIME: ${PROD_POSTGRES_CONN_MAX_IDLE_TIME}
+
   boiler-postgres-db:
     environment:
       DEBUG: ${PROD_DEBUG}
