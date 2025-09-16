@@ -34,6 +34,7 @@ type DbConnectionPool struct {
 
 func LoadEnv() (Env, error) {
 	apiConfig := ApiConfig{
+		Port:      os.Getenv("PORT"),
 		JwtSecret: os.Getenv("JWT_SECRET"),
 	}
 	dbConf := DbConfig{

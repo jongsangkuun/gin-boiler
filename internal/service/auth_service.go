@@ -31,7 +31,7 @@ func LoginService(c *gin.Context) {
 		return
 	}
 
-	user, err := repository.GetUserById(loginDto.UserId)
+	user, err := repository.GetUserByUserId(loginDto.UserId)
 	if err != nil {
 		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)

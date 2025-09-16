@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"gin-boiler/internal/middleware"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -43,11 +45,13 @@ func main() {
 		panic(err)
 	}
 
+	r.Use(middleware.CORSMiddleware())
+
 	// Swagger docs 초기화
 	docs.SwaggerInfo.Title = "Gin Boiler API"
 	docs.SwaggerInfo.Description = "Gin 보일러플레이트 API 서버입니다."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.Host = fmt.Sprintf("0.0.0.0:%s", env.ApiConfig.Port)
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 

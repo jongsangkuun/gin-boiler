@@ -28,12 +28,14 @@ func GenerateJWT(user_id, email, username string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(config.ENV.JwtSecret)
+	// string을 []byte로 변환
+	return token.SignedString([]byte(config.ENV.JwtSecret))
 }
 
 func ValidateJWT(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return config.ENV.JwtSecret, nil
+		// string을 []byte로 변환
+		return []byte(config.ENV.JwtSecret), nil
 	})
 
 	if err != nil {
