@@ -38,7 +38,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// 토큰이 유효하면 사용자 정보를 컨텍스트에 저장
-		c.Set("user_id", claims.UserID)
+		c.Set("user_id", claims.UserId)
 		c.Set("email", claims.Email)
 		c.Set("username", claims.Username)
 
