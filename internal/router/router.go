@@ -10,5 +10,6 @@ func SetupRoutes(router *gin.Engine) {
 	api := router.Group("/api/v1")
 	{
 		SetupUserRoutes(api)
+		SetupAuthRoutes(api)
 	}
 }

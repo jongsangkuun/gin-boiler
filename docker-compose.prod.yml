@@ -7,6 +7,8 @@ services:
       target: prod
       dockerfile: Dockerfile
     environment:
+      PORT: ${PORT}
+      JWT_SECRET: ${JWT_SECRET}
       POSTGRES_USER: ${PROD_POSTGRES_USER}
       POSTGRES_PASSWORD: ${PROD_POSTGRES_PASSWORD}
       POSTGRES_DB: ${PROD_POSTGRES_DB}

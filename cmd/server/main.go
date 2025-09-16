@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gin-boiler/internal/config"
 	"gin-boiler/internal/database"
 	"gin-boiler/internal/router"
@@ -23,6 +24,5 @@ func main() {
 	}
 
 	router.SetupRoutes(r)
-
-	_ = r.Run("0.0.0.0:8080") // listen and serve on 0.0.0.0:8080
+	_ = r.Run(fmt.Sprintf("0.0.0.0:%s", env.ApiConfig.Port)) // listen and serve on 0.0.0.0:8080
 }

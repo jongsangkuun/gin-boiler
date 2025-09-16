@@ -20,8 +20,8 @@ func CreateUserService(c *gin.Context) {
 	// Request로 전달받은 데이터 중 비밀번호를 암호화는 로직이 Service or Repo(DB 통신 로직) 어디에 있어야 할까?
 	hashPassword, err := utils.HashPassword(createDto.Password)
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
 	}
 
 	// Dto -> Model
@@ -34,22 +34,22 @@ func CreateUserService(c *gin.Context) {
 
 	err = repository.CreateUser(userModel)
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
 	}
 
-	response := utils.CreateBaseResponse(200, "success", "")
-	c.JSON(200, response)
+	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	c.JSON(http.StatusOK, response)
 }
 
 func GetUserService(c *gin.Context) {
 	id := c.Param("id")
 	data, err := repository.GetUser(id)
 	if err != nil {
-		c.JSON(500, utils.CreateBaseResponse(500, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseResponse(200, "success", data)
-	c.JSON(200, response)
+	response := utils.CreateBaseResponse(http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
 }
 
 func UpdateUserService(c *gin.Context) {
@@ -72,39 +72,39 @@ func UpdateUserService(c *gin.Context) {
 	if updateDto.Password != "" {
 		hashPassword, err := utils.HashPassword(updateDto.Password)
 		if err != nil {
-			response := utils.CreateBaseResponse(500, "error", err.Error())
-			c.JSON(500, response)
+			response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+			c.JSON(http.StatusInternalServerError, response)
 		}
 		userModel.Password = hashPassword
 	}
 
 	err := repository.UpdateUser(userModel)
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
 	}
 
-	response := utils.CreateBaseResponse(200, "success", "")
-	c.JSON(200, response)
+	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	c.JSON(http.StatusOK, response)
 }
 
 func DeleteUserService(c *gin.Context) {
 	id := c.Param("id")
 	err := repository.DeleteUser(id)
 	if err != nil {
-		c.JSON(500, utils.CreateBaseResponse(500, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseResponse(200, "success", "")
-	c.JSON(200, response)
+	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	c.JSON(http.StatusOK, response)
 }
 
 func ListUserService(c *gin.Context) {
 	userList, count, err := repository.GetUserList()
 	if err != nil {
-		c.JSON(500, utils.CreateBaseResponse(500, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseListResponse(200, "success", userList, count)
-	c.JSON(200, response)
+	response := utils.CreateBaseListResponse(http.StatusOK, "success", userList, count)
+	c.JSON(http.StatusOK, response)
 
 }
 
@@ -112,8 +112,8 @@ func DeleteHardUserService(c *gin.Context) {
 	id := c.Param("id")
 	err := repository.DeleteUserHard(id)
 	if err != nil {
-		c.JSON(500, utils.CreateBaseResponse(500, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseResponse(200, "success", "")
-	c.JSON(200, response)
+	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	c.JSON(http.StatusOK, response)
 }

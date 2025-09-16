@@ -58,3 +58,14 @@ func GetUserList() ([]models.User, int64, error) {
 
 	return users, count, nil
 }
+
+func GetUserById(id string) (*models.User, error) {
+	var user models.User
+
+	err := database.DB.Where("id = ?", id).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
