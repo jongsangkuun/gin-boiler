@@ -9,7 +9,7 @@ import (
 func SetupAuthRoutes(api *gin.RouterGroup) (a *gin.RouterGroup) {
 	authRoutes := api.Group("/auth")
 	{
-		authRoutes.GET("/login", service.LoginService)
+		authRoutes.POST("/login", service.LoginService)
 	}
 	return authRoutes
 }

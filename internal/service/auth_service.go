@@ -21,21 +21,22 @@ func LoginService(c *gin.Context) {
 
 	user, err := repository.GetUserById(loginDto.UserId)
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
+		return
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginDto.Password))
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
 
 	token, err := utils.GenerateJWT(user.UserId, user.Email, user.Username)
 	if err != nil {
-		response := utils.CreateBaseResponse(500, "error", err.Error())
-		c.JSON(500, response)
+		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
 	loginResponse := dto.LoginResDto{
