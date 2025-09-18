@@ -1,4 +1,26 @@
 definitions:
+  dto.AdminLoginReqDto:
+    properties:
+      admin_id:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - admin_id
+    - password
+    type: object
+  dto.AdminLoginResDto:
+    properties:
+      admin_id:
+        type: string
+      admin_name:
+        type: string
+      email:
+        type: string
+      token:
+        type: string
+    type: object
   dto.CreateAdminReqDto:
     properties:
       admin_id:
@@ -269,14 +291,14 @@ paths:
     post:
       consumes:
       - application/json
-      description: 사용자 ID와 비밀번호로 로그인합니다
+      description: 관리자 ID와 비밀번호로 로그인합니다
       parameters:
       - description: 로그인 정보
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.UserLoginReqDto'
+          $ref: '#/definitions/dto.AdminLoginReqDto'
       produces:
       - application/json
       responses:
@@ -287,7 +309,7 @@ paths:
             - $ref: '#/definitions/utils.BaseResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.UserLoginResDto'
+                  $ref: '#/definitions/dto.AdminLoginResDto'
               type: object
         "400":
           description: 잘못된 요청
@@ -301,7 +323,7 @@ paths:
           description: 서버 오류
           schema:
             $ref: '#/definitions/utils.BaseResponse'
-      summary: 사용자 로그인
+      summary: 관리자 로그인
       tags:
       - 인증
   /user:

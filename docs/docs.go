@@ -292,7 +292,7 @@ const docTemplate = `{
         },
         "/auth/login": {
             "post": {
-                "description": "사용자 ID와 비밀번호로 로그인합니다",
+                "description": "관리자 ID와 비밀번호로 로그인합니다",
                 "consumes": [
                     "application/json"
                 ],
@@ -302,7 +302,7 @@ const docTemplate = `{
                 "tags": [
                     "인증"
                 ],
-                "summary": "사용자 로그인",
+                "summary": "관리자 로그인",
                 "parameters": [
                     {
                         "description": "로그인 정보",
@@ -310,7 +310,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UserLoginReqDto"
+                            "$ref": "#/definitions/dto.AdminLoginReqDto"
                         }
                     }
                 ],
@@ -326,7 +326,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.UserLoginResDto"
+                                            "$ref": "#/definitions/dto.AdminLoginResDto"
                                         }
                                     }
                                 }
@@ -671,6 +671,39 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.AdminLoginReqDto": {
+            "type": "object",
+            "required": [
+                "admin_id",
+                "password"
+            ],
+            "properties": {
+                "admin_id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                }
+            }
+        },
+        "dto.AdminLoginResDto": {
+            "type": "object",
+            "properties": {
+                "admin_id": {
+                    "type": "string"
+                },
+                "admin_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.CreateAdminReqDto": {
             "type": "object",
             "properties": {
