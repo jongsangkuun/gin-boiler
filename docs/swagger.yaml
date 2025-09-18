@@ -291,6 +291,45 @@ paths:
     post:
       consumes:
       - application/json
+      description: 사용자 ID와 비밀번호로 로그인합니다
+      parameters:
+      - description: 로그인 정보
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserLoginReqDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 로그인 성공
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.UserLoginResDto'
+              type: object
+        "400":
+          description: 잘못된 요청
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      summary: 사용자 로그인
+      tags:
+      - 인증
+  /auth/login/admin:
+    post:
+      consumes:
+      - application/json
       description: 관리자 ID와 비밀번호로 로그인합니다
       parameters:
       - description: 로그인 정보

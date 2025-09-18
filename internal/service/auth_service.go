@@ -73,7 +73,7 @@ func UserLoginService(c *gin.Context) {
 // @Failure      400  {object}  utils.BaseResponse "잘못된 요청"
 // @Failure      401  {object}  utils.BaseResponse "인증 실패"
 // @Failure      500  {object}  utils.BaseResponse "서버 오류"
-// @Router       /auth/login [post]
+// @Router       /auth/login/admin [post]
 func AdminLoginService(c *gin.Context) {
 	var loginDto dto.AdminLoginReqDto
 
