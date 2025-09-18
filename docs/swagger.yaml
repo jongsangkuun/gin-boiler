@@ -1,4 +1,15 @@
 definitions:
+  dto.CreateAdminReqDto:
+    properties:
+      admin_id:
+        type: string
+      admin_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    type: object
   dto.CreateUserReqDto:
     properties:
       email:
@@ -10,7 +21,33 @@ definitions:
       username:
         type: string
     type: object
-  dto.LoginReqDto:
+  dto.UpdateAdminReqDto:
+    properties:
+      admin_id:
+        type: string
+      admin_name:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+    type: object
+  dto.UpdateUserReqDto:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.UserLoginReqDto:
     properties:
       password:
         minLength: 6
@@ -21,24 +58,11 @@ definitions:
     - password
     - user_id
     type: object
-  dto.LoginResDto:
+  dto.UserLoginResDto:
     properties:
       email:
         type: string
       token:
-        type: string
-      user_id:
-        type: string
-      username:
-        type: string
-    type: object
-  dto.UpdateUserReqDto:
-    properties:
-      email:
-        type: string
-      id:
-        type: integer
-      password:
         type: string
       user_id:
         type: string
@@ -66,6 +90,181 @@ definitions:
 info:
   contact: {}
 paths:
+  /admin:
+    post:
+      consumes:
+      - application/json
+      description: 새로운 관리자 계정을 생성합니다
+      parameters:
+      - description: 관리자 생성 정보
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateAdminReqDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 관리자 생성 성공
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "400":
+          description: 잘못된 요청
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      security:
+      - BearerAuth: []
+      summary: 관리자 생성
+      tags:
+      - admin
+    put:
+      consumes:
+      - application/json
+      description: 관리자 정보를 수정합니다. 비밀번호를 변경하지 않으려면 password 필드를 비워두세요.
+      parameters:
+      - description: 관리자 수정 정보
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateAdminReqDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 관리자 수정 성공
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "400":
+          description: 잘못된 요청
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      security:
+      - BearerAuth: []
+      summary: 관리자 수정
+      tags:
+      - admin
+  /admin/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 주어진 관리자 ID로 소프트 삭제를 수행합니다
+      parameters:
+      - description: 관리자 ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 관리자 삭제 성공
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "404":
+          description: 관리자 없음
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      security:
+      - BearerAuth: []
+      summary: 관리자 삭제 (소프트 삭제)
+      tags:
+      - admin
+    get:
+      consumes:
+      - application/json
+      description: 관리자 ID로 관리자 정보를 조회합니다
+      parameters:
+      - description: 관리자 ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 관리자 조회 성공
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "404":
+          description: 관리자 없음
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      security:
+      - BearerAuth: []
+      summary: 관리자 조회
+      tags:
+      - admin
+  /admin/{id}/hard:
+    delete:
+      consumes:
+      - application/json
+      description: 주어진 관리자 ID로 데이터베이스에서 완전 삭제를 수행합니다
+      parameters:
+      - description: 관리자 ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 관리자 완전 삭제 성공
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "401":
+          description: 인증 실패
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "404":
+          description: 관리자 없음
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      security:
+      - BearerAuth: []
+      summary: 관리자 완전 삭제
+      tags:
+      - admin
   /auth/login:
     post:
       consumes:
@@ -77,7 +276,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.LoginReqDto'
+          $ref: '#/definitions/dto.UserLoginReqDto'
       produces:
       - application/json
       responses:
@@ -88,7 +287,7 @@ paths:
             - $ref: '#/definitions/utils.BaseResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.LoginResDto'
+                  $ref: '#/definitions/dto.UserLoginResDto'
               type: object
         "400":
           description: 잘못된 요청
