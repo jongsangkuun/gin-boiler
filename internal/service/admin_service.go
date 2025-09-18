@@ -53,10 +53,22 @@ func GetAdminService(c *gin.Context) {
 
 func UpdateAdminService(c *gin.Context) {
 	var updateDto dto.UpdateAdminReqDto
-	var hashPassword string
+
 	if err := c.ShouldBindJSON(&updateDto); err != nil {
 		response := utils.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
 		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var hashPassword string
+	if updateDto.Password != "" {
+		var err error
+		hashPassword, err = utils.HashPassword(updateDto.Password)
+		if err != nil {
+			response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+			c.JSON(http.StatusInternalServerError, response)
+			return
+		}
 	}
 
 	adminModel := models.Admin{
@@ -66,19 +78,11 @@ func UpdateAdminService(c *gin.Context) {
 		AdminName: updateDto.AdminName,
 	}
 
-	if updateDto.Password != "" {
-		hashPassword, err := utils.HashPassword(updateDto.Password)
-		if err != nil {
-			response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
-			c.JSON(http.StatusInternalServerError, response)
-		}
-		adminModel.Password = hashPassword
-	}
-
 	err := repository.UpdateAdmin(adminModel)
 	if err != nil {
 		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
+		return
 	}
 
 	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
