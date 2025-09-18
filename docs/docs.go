@@ -30,7 +30,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin"
+                    "관리자"
                 ],
                 "summary": "관리자 수정",
                 "parameters": [
@@ -85,7 +85,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin"
+                    "관리자"
                 ],
                 "summary": "관리자 생성",
                 "parameters": [
@@ -142,7 +142,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin"
+                    "관리자"
                 ],
                 "summary": "관리자 조회",
                 "parameters": [
@@ -195,7 +195,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin"
+                    "관리자"
                 ],
                 "summary": "관리자 삭제 (소프트 삭제)",
                 "parameters": [
@@ -250,7 +250,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin"
+                    "관리자"
                 ],
                 "summary": "관리자 완전 삭제",
                 "parameters": [

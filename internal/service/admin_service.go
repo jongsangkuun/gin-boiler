@@ -13,7 +13,7 @@ import (
 // CreateAdminService godoc
 // @Summary      관리자 생성
 // @Description  새로운 관리자 계정을 생성합니다
-// @Tags         admin
+// @Tags         관리자
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
@@ -56,7 +56,7 @@ func CreateAdminService(c *gin.Context) {
 // GetAdminService godoc
 // @Summary      관리자 조회
 // @Description  관리자 ID로 관리자 정보를 조회합니다
-// @Tags         admin
+// @Tags         관리자
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
@@ -80,7 +80,7 @@ func GetAdminService(c *gin.Context) {
 // UpdateAdminService godoc
 // @Summary      관리자 수정
 // @Description  관리자 정보를 수정합니다. 비밀번호를 변경하지 않으려면 password 필드를 비워두세요.
-// @Tags         admin
+// @Tags         관리자
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
@@ -131,7 +131,7 @@ func UpdateAdminService(c *gin.Context) {
 // DeleteAdminService godoc
 // @Summary      관리자 삭제 (소프트 삭제)
 // @Description  주어진 관리자 ID로 소프트 삭제를 수행합니다
-// @Tags         admin
+// @Tags         관리자
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
@@ -154,7 +154,7 @@ func DeleteAdminService(c *gin.Context) {
 // DeleteHardAdminService godoc
 // @Summary      관리자 완전 삭제
 // @Description  주어진 관리자 ID로 데이터베이스에서 완전 삭제를 수행합니다
-// @Tags         admin
+// @Tags         관리자
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth

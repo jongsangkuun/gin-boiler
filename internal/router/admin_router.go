@@ -9,11 +9,11 @@ import (
 func SetupAdminRoutes(api *gin.RouterGroup) *gin.RouterGroup {
 	adminRouter := api.Group("/admin")
 	{
-		adminRouter.GET("/:id", service.GetAdminService)
-		adminRouter.POST("", service.CreateAdminService)
-		adminRouter.PUT("/", service.UpdateAdminService)
-		adminRouter.DELETE("/:id", service.DeleteAdminService)
-		adminRouter.DELETE("/:id/hard", service.DeleteHardAdminService)
+		adminRouter.GET("/:id", service.GetAdminService)                // GET /api/v1/admin/:id
+		adminRouter.POST("", service.CreateAdminService)                // POST /api/v1/admin
+		adminRouter.PUT("/", service.UpdateAdminService)                // PUT /api/v1/admin
+		adminRouter.DELETE("/:id", service.DeleteAdminService)          // DELETE /api/v1/admin/:id
+		adminRouter.DELETE("/:id/hard", service.DeleteHardAdminService) // DELETE /api/v1/admin
 	}
 	return adminRouter
 }
