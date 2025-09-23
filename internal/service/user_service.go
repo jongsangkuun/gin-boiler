@@ -41,8 +41,8 @@ func CreateUserService(c *gin.Context) {
 	userModel := models.User{
 		Email:    createDto.Email,
 		Password: hashPassword,
-		UserId:   createDto.UserId,
-		Username: createDto.Username,
+		LoginId:  createDto.UserId,
+		NickName: createDto.Username,
 	}
 
 	err = repository.CreateUser(userModel)
@@ -104,8 +104,8 @@ func UpdateUserService(c *gin.Context) {
 	userModel := models.User{
 		Email:    updateDto.Email,
 		Password: hashPassword,
-		UserId:   updateDto.UserId,
-		Username: updateDto.Username,
+		LoginId:  updateDto.UserId,
+		NickName: updateDto.Username,
 	}
 
 	if updateDto.Password != "" {

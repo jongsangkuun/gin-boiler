@@ -45,7 +45,7 @@ func UserLoginService(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateJWT(user.UserId, user.Email, user.Username)
+	token, err := utils.GenerateJWT(user.LoginId, user.Email, user.NickName)
 	if err != nil {
 		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
@@ -53,8 +53,8 @@ func UserLoginService(c *gin.Context) {
 	}
 	loginResponse := dto.UserLoginResDto{
 		Token:    token,
-		UserId:   user.UserId,
-		Username: user.Username,
+		UserId:   user.LoginId,
+		Username: user.NickName,
 		Email:    user.Email,
 	}
 
@@ -97,7 +97,7 @@ func AdminLoginService(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateJWT(admin.UserId, admin.Email, admin.Username)
+	token, err := utils.GenerateJWT(admin.LoginId, admin.Email, admin.NickName)
 	if err != nil {
 		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
@@ -105,8 +105,8 @@ func AdminLoginService(c *gin.Context) {
 	}
 	loginResponse := dto.AdminLoginResDto{
 		Token:     token,
-		AdminId:   admin.UserId,
-		AdminName: admin.Username,
+		AdminId:   admin.LoginId,
+		AdminName: admin.NickName,
 		Email:     admin.Email,
 	}
 

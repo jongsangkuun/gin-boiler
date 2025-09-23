@@ -37,10 +37,10 @@ func CreateAdminService(c *gin.Context) {
 	}
 
 	adminModel := models.Admin{
-		Email:     createDto.Email,
-		Password:  hashPassword,
-		AdminId:   createDto.AdminId,
-		AdminName: createDto.AdminName,
+		Email:    createDto.Email,
+		Password: hashPassword,
+		LoginId:  createDto.AdminId,
+		NickName: createDto.AdminName,
 	}
 
 	err = repository.CreateAdmin(adminModel)
@@ -111,10 +111,10 @@ func UpdateAdminService(c *gin.Context) {
 	}
 
 	adminModel := models.Admin{
-		Email:     updateDto.Email,
-		Password:  hashPassword,
-		AdminId:   updateDto.AdminId,
-		AdminName: updateDto.AdminName,
+		Email:    updateDto.Email,
+		Password: hashPassword,
+		LoginId:  updateDto.AdminId,
+		NickName: updateDto.AdminName,
 	}
 
 	err := repository.UpdateAdmin(adminModel)
