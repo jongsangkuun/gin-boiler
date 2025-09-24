@@ -1,4 +1,4 @@
-package utils
+package dto
 
 type BaseResponse struct {
 	Status  uint        `json:"status"`
@@ -11,6 +11,10 @@ type BaseListResponse struct {
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 	Count   int64       `json:"count"`
+}
+type BaseListReqDto struct {
+	Offset int `json:"offset" default:"0"`
+	Limit  int `json:"limit" default:"10"`
 }
 
 func CreateBaseResponse(status uint, message string, data interface{}) BaseResponse {
