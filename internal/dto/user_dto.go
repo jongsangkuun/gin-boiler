@@ -14,6 +14,10 @@ type UpdateUserReqDto struct {
 	CreateUserReqDto
 }
 
+type UserListReqDto struct {
+	BasePageReqDto
+}
+
 // ListUserResDto 사용자 목록 응답 데이터
 type ListUserResDto struct {
 	ID       int

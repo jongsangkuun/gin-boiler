@@ -18,10 +18,10 @@ import (
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.CreateUserReqDto true "사용자 생성 정보"
-// @Success      200  {object}  dto.BaseResponse "사용자 생성 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "사용자 생성 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user [post]
 func CreateUserService(c *gin.Context) {
 	var createDto dto.CreateUserReqDto
@@ -63,10 +63,10 @@ func CreateUserService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "사용자 ID"
-// @Success      200  {object}  dto.BaseResponse "사용자 조회 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "사용자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "사용자 조회 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "사용자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user/{id} [get]
 func GetUserService(c *gin.Context) {
 	id := c.Param("id")
@@ -86,10 +86,10 @@ func GetUserService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.UpdateUserReqDto true "사용자 수정 정보"
-// @Success      200  {object}  dto.BaseResponse "사용자 수정 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "사용자 수정 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user [put]
 func UpdateUserService(c *gin.Context) {
 	var updateDto dto.UpdateUserReqDto
@@ -135,10 +135,10 @@ func UpdateUserService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "사용자 ID"
-// @Success      200  {object}  dto.BaseResponse "사용자 삭제 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "사용자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "사용자 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "사용자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user/{id} [delete]
 func DeleteUserService(c *gin.Context) {
 	id := c.Param("id")
@@ -157,9 +157,9 @@ func DeleteUserService(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
-// @Success      200  {object}  dto.BaseListResponse "사용자 목록 조회 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseListResponseDto "사용자 목록 조회 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user/list [get]
 func ListUserService(c *gin.Context) {
 	userList, count, err := repository.GetUserList()
@@ -179,10 +179,10 @@ func ListUserService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "사용자 ID"
-// @Success      200  {object}  dto.BaseResponse "사용자 완전 삭제 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "사용자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "사용자 완전 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "사용자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /user/{id}/hard [delete]
 func DeleteHardUserService(c *gin.Context) {
 	id := c.Param("id")

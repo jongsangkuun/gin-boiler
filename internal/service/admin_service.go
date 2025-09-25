@@ -18,10 +18,10 @@ import (
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.CreateAdminReqDto true "관리자 생성 정보"
-// @Success      200  {object}  dto.BaseResponse "관리자 생성 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 생성 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin [post]
 func CreateAdminService(c *gin.Context) {
 	var createDto dto.CreateAdminReqDto
@@ -61,10 +61,10 @@ func CreateAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  dto.BaseResponse "관리자 조회 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "관리자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 조회 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id} [get]
 func GetAdminService(c *gin.Context) {
 	id := c.Param("id")
@@ -85,10 +85,10 @@ func GetAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.UpdateAdminReqDto true "관리자 수정 정보"
-// @Success      200  {object}  dto.BaseResponse "관리자 수정 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 수정 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin [put]
 func UpdateAdminService(c *gin.Context) {
 	var updateDto dto.UpdateAdminReqDto
@@ -136,10 +136,10 @@ func UpdateAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  dto.BaseResponse "관리자 삭제 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "관리자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id} [delete]
 func DeleteAdminService(c *gin.Context) {
 	id := c.Param("id")
@@ -159,10 +159,10 @@ func DeleteAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  dto.BaseResponse "관리자 완전 삭제 성공"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      404  {object}  dto.BaseResponse "관리자 없음"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 완전 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id}/hard [delete]
 func DeleteHardAdminService(c *gin.Context) {
 	id := c.Param("id")

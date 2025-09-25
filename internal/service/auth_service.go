@@ -17,10 +17,10 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param        request body dto.UserLoginReqDto true "로그인 정보"
-// @Success      200  {object}  dto.BaseResponse{data=dto.UserLoginResDto} "로그인 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto{data=dto.UserLoginResDto} "로그인 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /auth/login [post]
 func UserLoginService(c *gin.Context) {
 	var loginDto dto.UserLoginReqDto
@@ -69,10 +69,10 @@ func UserLoginService(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        request body dto.AdminLoginReqDto true "로그인 정보"
-// @Success      200  {object}  dto.BaseResponse{data=dto.AdminLoginResDto} "로그인 성공"
-// @Failure      400  {object}  dto.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  dto.BaseResponse "인증 실패"
-// @Failure      500  {object}  dto.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto{data=dto.AdminLoginResDto} "로그인 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /auth/login/admin [post]
 func AdminLoginService(c *gin.Context) {
 	var loginDto dto.AdminLoginReqDto
