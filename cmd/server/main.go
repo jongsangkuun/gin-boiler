@@ -41,13 +41,13 @@ func main() {
 	}
 
 	_, err = database.RdbConnect(env)
-	defer database.Close()
+	defer database.RdbClose()
 	if err != nil {
 		panic(err)
 	}
 
 	_, err = database.MongoConnect(env)
-	defer database.Close()
+	defer database.DisconnectMongo()
 	if err != nil {
 		panic(err)
 	}

@@ -106,8 +106,8 @@ func setupConnectionPool(sqlDB *sql.DB, poolConfig config.DbConnectionPool) erro
 	return nil
 }
 
-// Close 데이터베이스 연결을 종료합니다
-func Close() error {
+// RdbClose 데이터베이스 연결을 종료합니다
+func RdbClose() error {
 	if RDB != nil {
 		sqlDB, err := RDB.DB()
 		if err != nil {
