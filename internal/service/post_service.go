@@ -26,9 +26,19 @@ func ListPostService(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func GetPostService(c *gin.Context) {
+func GetPostByIdService(c *gin.Context) {
+	id := c.Param("id")
 
+	data, err := repository.GetPostById(id)
+	if err != nil {
+		response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err)
+		c.JSON(http.StatusInternalServerError, response)
+	}
+
+	response := dto.CreateBaseResponse(http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
 }
+
 func CreatePostService(c *gin.Context)     {}
 func UpdatePostService(c *gin.Context)     {}
 func DeletePostService(c *gin.Context)     {}

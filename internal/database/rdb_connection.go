@@ -14,9 +14,9 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var DB *gorm.DB
+var RDB *gorm.DB
 
-func Connect(env config.Env) (*gorm.DB, error) {
+func RdbConnect(env config.Env) (*gorm.DB, error) {
 	dsn := buildPostgresDSN(&env)
 	log.Printf("PostgreSQL DSN: %s", dsn)
 	gormConfig := &gorm.Config{
@@ -32,10 +32,10 @@ func Connect(env config.Env) (*gorm.DB, error) {
 		return nil, fmt.Errorf("PostgreSQL GORM 연결 실패: %v", err)
 	}
 
-	// 기본 SQL DB 인스턴스 가져오기 (연결 풀 설정용)
+	// 기본 SQL RDB 인스턴스 가져오기 (연결 풀 설정용)
 	sqlDB, err := db.DB()
 	if err != nil {
-		return nil, fmt.Errorf("SQL DB 인스턴스 가져오기 실패: %v", err)
+		return nil, fmt.Errorf("SQL RDB 인스턴스 가져오기 실패: %v", err)
 	}
 
 	// 연결 풀 설정
@@ -48,7 +48,7 @@ func Connect(env config.Env) (*gorm.DB, error) {
 		return nil, fmt.Errorf("PostgreSQL 연결 테스트 실패: %v", err)
 	}
 
-	DB = db
+	RDB = db
 	log.Printf("PostgreSQL GORM 데이터베이스 연결 성공")
 	return db, nil
 }
@@ -108,10 +108,10 @@ func setupConnectionPool(sqlDB *sql.DB, poolConfig config.DbConnectionPool) erro
 
 // Close 데이터베이스 연결을 종료합니다
 func Close() error {
-	if DB != nil {
-		sqlDB, err := DB.DB()
+	if RDB != nil {
+		sqlDB, err := RDB.DB()
 		if err != nil {
-			return fmt.Errorf("SQL DB 인스턴스 가져오기 실패: %v", err)
+			return fmt.Errorf("SQL RDB 인스턴스 가져오기 실패: %v", err)
 		}
 		return sqlDB.Close()
 	}

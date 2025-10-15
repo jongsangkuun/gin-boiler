@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"gin-boiler/internal/dto"
 	"gin-boiler/internal/utils"
 	"net/http"
 	"strings"
@@ -12,7 +13,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			response := utils.CreateBaseResponse(http.StatusUnauthorized, "토큰이 필요합니다", nil)
+			response := dto.CreateBaseResponse(http.StatusUnauthorized, "토큰이 필요합니다", nil)
 			c.JSON(http.StatusUnauthorized, response)
 			c.Abort()
 			return
@@ -21,7 +22,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// Bearer 토큰 추출
 		tokenParts := strings.Split(authHeader, " ")
 		if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
-			response := utils.CreateBaseResponse(http.StatusUnauthorized, "잘못된 토큰 형식", nil)
+			response := dto.CreateBaseResponse(http.StatusUnauthorized, "잘못된 토큰 형식", nil)
 			c.JSON(http.StatusUnauthorized, response)
 			c.Abort()
 			return
@@ -31,7 +32,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		claims, err := utils.ValidateJWT(token)
 		if err != nil {
-			response := utils.CreateBaseResponse(http.StatusUnauthorized, "유효하지 않은 토큰", err.Error())
+			response := dto.CreateBaseResponse(http.StatusUnauthorized, "유효하지 않은 토큰", err.Error())
 			c.JSON(http.StatusUnauthorized, response)
 			c.Abort()
 			return

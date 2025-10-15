@@ -7,7 +7,7 @@ import (
 )
 
 func CreateAdmin(adminModel models.Admin) error {
-	err := database.DB.Create(&adminModel).Error
+	err := database.RDB.Create(&adminModel).Error
 	if err != nil {
 		return err
 	}
@@ -17,7 +17,7 @@ func CreateAdmin(adminModel models.Admin) error {
 
 func GetAdmin(id string) (*models.Admin, error) {
 	Admin := &models.Admin{}
-	err := database.DB.Where("admin_id = ?", id).First(&Admin).Error
+	err := database.RDB.Where("admin_id = ?", id).First(&Admin).Error
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func GetAdmin(id string) (*models.Admin, error) {
 }
 
 func UpdateAdmin(adminModel models.Admin) error {
-	err := database.DB.Save(&adminModel).Error
+	err := database.RDB.Save(&adminModel).Error
 	if err != nil {
 		return err
 	}
@@ -35,7 +35,7 @@ func UpdateAdmin(adminModel models.Admin) error {
 }
 
 func DeleteAdmin(id string) error {
-	err := database.DB.Model(&models.Admin{}).Where("admin_id = ?", id).Update("deleted_at", time.Now()).Error
+	err := database.RDB.Model(&models.Admin{}).Where("admin_id = ?", id).Update("deleted_at", time.Now()).Error
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func DeleteAdmin(id string) error {
 }
 
 func DeleteHardAdmin(id string) error {
-	err := database.DB.Where("admin_id = ?", id).Delete(&models.Admin{}).Error
+	err := database.RDB.Where("admin_id = ?", id).Delete(&models.Admin{}).Error
 	if err != nil {
 		return err
 	}

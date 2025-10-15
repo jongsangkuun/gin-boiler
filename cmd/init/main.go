@@ -13,7 +13,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	_, err = database.Connect(env)
+	_, err = database.RdbConnect(env)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -41,7 +41,7 @@ func initAdmin() error {
 	admin.LoginId = "admin"
 	admin.Role = models.SuperAdmin
 
-	err = database.DB.Create(&admin).Error
+	err = database.RDB.Create(&admin).Error
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func initUser() error {
 	user.Email = "user@user.com"
 	user.LoginId = "user"
 	user.AccountStatus = models.AccountStatusActive
-	err = database.DB.Create(&user).Error
+	err = database.RDB.Create(&user).Error
 
 	if err != nil {
 		return err

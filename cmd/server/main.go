@@ -40,7 +40,14 @@ func main() {
 		panic(err)
 	}
 
-	_, err = database.Connect(env)
+	_, err = database.RdbConnect(env)
+	defer database.Close()
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = database.MongoConnect(env)
+	defer database.Close()
 	if err != nil {
 		panic(err)
 	}

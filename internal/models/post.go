@@ -2,9 +2,9 @@ package models
 
 type Post struct {
 	BaseModel
-	PostData string `json:"post_data" gorm:"type:text;not null;default:''"`
-	UserId   string `json:"user_id" gorm:"not null;size:255;index"`
-	User     *User  `json:"user" gorm:"references:ID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Title   string `json:"title" gorm:"not null;size:255"`
+	Content string `json:"content" gorm:"not null;size:255"`
+	UserId  string `json:"user_id" gorm:"not null;size:255"`
 }
 
 func (Post) TableName() string {

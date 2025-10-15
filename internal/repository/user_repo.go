@@ -8,7 +8,7 @@ import (
 
 func GetUser(id string) (*models.User, error) {
 	User := &models.User{}
-	err := database.DB.Where("id = ? AND account_status = ?", id, "active").First(&User).Error
+	err := database.RDB.Where("id = ? AND account_status = ?", id, "active").First(&User).Error
 	if err != nil {
 		return nil, err
 	}
@@ -16,7 +16,7 @@ func GetUser(id string) (*models.User, error) {
 }
 
 func CreateUser(userModel models.User) error {
-	err := database.DB.Create(&userModel).Error
+	err := database.RDB.Create(&userModel).Error
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func CreateUser(userModel models.User) error {
 }
 
 func UpdateUser(userModel models.User) error {
-	err := database.DB.Save(&userModel).Error
+	err := database.RDB.Save(&userModel).Error
 	if err != nil {
 		return err
 	}
@@ -32,7 +32,7 @@ func UpdateUser(userModel models.User) error {
 }
 
 func DeleteUser(id string) error {
-	err := database.DB.Model(&models.User{}).Where("id = ?", id).Update("deleted_at", time.Now()).Error
+	err := database.RDB.Model(&models.User{}).Where("id = ?", id).Update("deleted_at", time.Now()).Error
 	if err != nil {
 		return err
 	}
@@ -40,7 +40,7 @@ func DeleteUser(id string) error {
 }
 
 func DeleteUserHard(id string) error {
-	err := database.DB.Where("id = ?", id).Delete(&models.User{}).Error
+	err := database.RDB.Where("id = ?", id).Delete(&models.User{}).Error
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func GetUserList() ([]models.User, int64, error) {
 	var users []models.User
 	var count int64
 
-	err := database.DB.Find(&users).Count(&count).Error
+	err := database.RDB.Find(&users).Count(&count).Error
 	if err != nil {
 		return nil, 0, err
 	}
@@ -62,7 +62,7 @@ func GetUserList() ([]models.User, int64, error) {
 func GetUserByUserId(user_id string) (*models.User, error) {
 	var user models.User
 
-	err := database.DB.Where("user_id = ?", user_id).First(&user).Error
+	err := database.RDB.Where("user_id = ?", user_id).First(&user).Error
 	if err != nil {
 		return nil, err
 	}

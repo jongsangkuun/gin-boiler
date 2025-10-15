@@ -9,7 +9,8 @@ type User struct {
 	Email         string        `json:"email" gorm:"uniqueIndex;not null;size:255"`
 	NickName      string        `json:"nick_name" gorm:"uniqueIndex;not null;size:255"`
 	Password      string        `json:"-" gorm:"not null;size:255"`
-	AccountStatus AccountStatus `json:"account_status" gorm:"type:varchar(20);not null;default:pending"`
+	AccountStatus AccountStatus `json:"account_status" gorm:"type:varchar(20);not null;default:'pending'"`
+	Posts         []Post        `json:"posts" gorm:"foreignKey:UserId"`
 }
 
 func (User) TableName() string {
