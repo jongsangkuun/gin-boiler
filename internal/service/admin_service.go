@@ -18,38 +18,38 @@ import (
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.CreateAdminReqDto true "관리자 생성 정보"
-// @Success      200  {object}  utils.BaseResponse "관리자 생성 성공"
-// @Failure      400  {object}  utils.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  utils.BaseResponse "인증 실패"
-// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 생성 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin [post]
 func CreateAdminService(c *gin.Context) {
 	var createDto dto.CreateAdminReqDto
 	if err := c.ShouldBindJSON(&createDto); err != nil {
-		response := utils.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
+		response := dto.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
 		c.JSON(http.StatusBadRequest, response)
 	}
 
 	hashPassword, err := utils.HashPassword(createDto.Password)
 	if err != nil {
-		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
 	}
 
 	adminModel := models.Admin{
-		Email:     createDto.Email,
-		Password:  hashPassword,
-		AdminId:   createDto.AdminId,
-		AdminName: createDto.AdminName,
+		Email:    createDto.Email,
+		Password: hashPassword,
+		LoginId:  createDto.AdminId,
+		NickName: createDto.AdminName,
 	}
 
 	err = repository.CreateAdmin(adminModel)
 	if err != nil {
-		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
 	}
 
-	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	response := dto.CreateBaseResponse(http.StatusOK, "success", "")
 	c.JSON(http.StatusOK, response)
 }
 
@@ -61,19 +61,19 @@ func CreateAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  utils.BaseResponse "관리자 조회 성공"
-// @Failure      401  {object}  utils.BaseResponse "인증 실패"
-// @Failure      404  {object}  utils.BaseResponse "관리자 없음"
-// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 조회 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id} [get]
 func GetAdminService(c *gin.Context) {
 	id := c.Param("id")
 	data, err := repository.GetAdmin(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
 
-	response := utils.CreateBaseResponse(http.StatusOK, "success", data)
+	response := dto.CreateBaseResponse(http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -85,16 +85,16 @@ func GetAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        request body dto.UpdateAdminReqDto true "관리자 수정 정보"
-// @Success      200  {object}  utils.BaseResponse "관리자 수정 성공"
-// @Failure      400  {object}  utils.BaseResponse "잘못된 요청"
-// @Failure      401  {object}  utils.BaseResponse "인증 실패"
-// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 수정 성공"
+// @Failure      400  {object}  dto.BaseResponseDto "잘못된 요청"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin [put]
 func UpdateAdminService(c *gin.Context) {
 	var updateDto dto.UpdateAdminReqDto
 
 	if err := c.ShouldBindJSON(&updateDto); err != nil {
-		response := utils.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
+		response := dto.CreateBaseResponse(http.StatusBadRequest, "fail", err.Error())
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -104,27 +104,27 @@ func UpdateAdminService(c *gin.Context) {
 		var err error
 		hashPassword, err = utils.HashPassword(updateDto.Password)
 		if err != nil {
-			response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+			response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 			c.JSON(http.StatusInternalServerError, response)
 			return
 		}
 	}
 
 	adminModel := models.Admin{
-		Email:     updateDto.Email,
-		Password:  hashPassword,
-		AdminId:   updateDto.AdminId,
-		AdminName: updateDto.AdminName,
+		Email:    updateDto.Email,
+		Password: hashPassword,
+		LoginId:  updateDto.AdminId,
+		NickName: updateDto.AdminName,
 	}
 
 	err := repository.UpdateAdmin(adminModel)
 	if err != nil {
-		response := utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
+		response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
 
-	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	response := dto.CreateBaseResponse(http.StatusOK, "success", "")
 	c.JSON(http.StatusOK, response)
 }
 
@@ -136,18 +136,18 @@ func UpdateAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  utils.BaseResponse "관리자 삭제 성공"
-// @Failure      401  {object}  utils.BaseResponse "인증 실패"
-// @Failure      404  {object}  utils.BaseResponse "관리자 없음"
-// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id} [delete]
 func DeleteAdminService(c *gin.Context) {
 	id := c.Param("id")
 	err := repository.DeleteAdmin(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	response := dto.CreateBaseResponse(http.StatusOK, "success", "")
 	c.JSON(http.StatusOK, response)
 }
 
@@ -159,17 +159,17 @@ func DeleteAdminService(c *gin.Context) {
 // @Produce      json
 // @Security     BearerAuth
 // @Param        id   path      string  true  "관리자 ID"
-// @Success      200  {object}  utils.BaseResponse "관리자 완전 삭제 성공"
-// @Failure      401  {object}  utils.BaseResponse "인증 실패"
-// @Failure      404  {object}  utils.BaseResponse "관리자 없음"
-// @Failure      500  {object}  utils.BaseResponse "서버 오류"
+// @Success      200  {object}  dto.BaseResponseDto "관리자 완전 삭제 성공"
+// @Failure      401  {object}  dto.BaseResponseDto "인증 실패"
+// @Failure      404  {object}  dto.BaseResponseDto "관리자 없음"
+// @Failure      500  {object}  dto.BaseResponseDto "서버 오류"
 // @Router       /admin/{id}/hard [delete]
 func DeleteHardAdminService(c *gin.Context) {
 	id := c.Param("id")
 	err := repository.DeleteHardAdmin(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, utils.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
+		c.JSON(http.StatusInternalServerError, dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error()))
 	}
-	response := utils.CreateBaseResponse(http.StatusOK, "success", "")
+	response := dto.CreateBaseResponse(http.StatusOK, "success", "")
 	c.JSON(http.StatusOK, response)
 }

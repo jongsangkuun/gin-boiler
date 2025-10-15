@@ -19,9 +19,13 @@ func main() {
 	}
 	err = initAdmin()
 	if err != nil {
-		log.Panic(err)
+		log.Println(err)
 	}
-	log.Println("Admin user created successfully.")
+	err = initUser()
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println("Admin & User created successfully.")
 }
 
 func initAdmin() error {
@@ -31,13 +35,33 @@ func initAdmin() error {
 		return err
 	}
 
-	admin.AdminName = "admin"
+	admin.NickName = "admin"
 	admin.Password = hashPassword
 	admin.Email = "admin@admin.com"
-	admin.AdminId = "admin"
+	admin.LoginId = "admin"
 	admin.Role = models.SuperAdmin
 
 	err = database.DB.Create(&admin).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func initUser() error {
+	var user models.User
+	hashPassword, err := utils.HashPassword("user")
+	if err != nil {
+		return err
+	}
+
+	user.NickName = "user"
+	user.Password = hashPassword
+	user.Email = "user@user.com"
+	user.LoginId = "user"
+	user.AccountStatus = models.AccountStatusActive
+	err = database.DB.Create(&user).Error
+
 	if err != nil {
 		return err
 	}
