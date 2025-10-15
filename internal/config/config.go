@@ -10,6 +10,7 @@ type Env struct {
 	ApiConfig
 	DbConfig
 	DbConnectionPool
+	MongoConfig
 }
 
 type ApiConfig struct {
@@ -32,6 +33,10 @@ type DbConnectionPool struct {
 	ConnMaxIdleTime string
 }
 
+type MongoConfig struct {
+	Url string
+}
+
 func LoadEnv() (Env, error) {
 	apiConfig := ApiConfig{
 		Port:      os.Getenv("PORT"),
@@ -52,11 +57,17 @@ func LoadEnv() (Env, error) {
 		ConnMaxIdleTime: os.Getenv("POSTGRES_CONN_MAX_IDLE_TIME"),
 	}
 
+	mongoConf := MongoConfig{
+		Url: os.Getenv("MONGO_URL"),
+	}
+
 	env := Env{
 		apiConfig,
 		dbConf,
 		dbConnPool,
+		mongoConf,
 	}
+
 	ENV = &env
 
 	return env, nil
