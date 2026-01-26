@@ -83,7 +83,7 @@ func AdminLoginService(c *gin.Context) {
 		return
 	}
 
-	admin, err := repository.GetUserByUserId(loginDto.AdminId)
+	admin, err := repository.GetAdmin(loginDto.AdminId)
 	if err != nil {
 		response := dto.CreateBaseResponse(http.StatusInternalServerError, "error", err.Error())
 		c.JSON(http.StatusInternalServerError, response)

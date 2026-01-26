@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"gin-boiler/internal/config"
 	"log"
+	"net/url"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -41,7 +43,17 @@ func MongoConnect(env config.Env) (*mongo.Client, error) {
 		return nil, fmt.Errorf("MongoDB 핑 실패: %v", err)
 	}
 
-	MongoDatabase = client.Database(uri)
+	parsedURI, err := url.Parse(uri)
+	if err != nil {
+		return nil, fmt.Errorf("MongoDB URI 파싱 실패: %v", err)
+	}
+	dbName := strings.TrimPrefix(parsedURI.Path, "/")
+	if dbName == "" {
+		return nil, fmt.Errorf("MongoDB 데이터베이스 이름이 없습니다")
+	}
+
+	MongoDB = client
+	MongoDatabase = client.Database(dbName)
 	log.Printf("MongoDB 데이터베이스 연결 성공")
 	return client, nil
 }
